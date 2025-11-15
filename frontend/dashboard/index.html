@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost & Found Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Lucide Icon Library -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="top-bar">
+      <h1>Lost & Found Portal</h1>
+      <button id="logout-btn" class="btn btn-outline">Logout</button>
+    </header>
+<nav class="navbar">
+  <h1>🔍Lost & Found Dashboard</h1>
+  <button id="profile-link" class="profile-btn">
+    <i data-lucide="user"></i> Profile
+  </button>
+</nav>
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <h2 id="welcome-text"></h2>
+      <p>Help your community by reporting lost or found items</p>
+      <div class="button-group">
+        <button id="report-lost" class="btn btn-white" onclick="onReportLost()">
+          <i data-lucide="alert-circle"></i>
+          Report Lost Item
+        </button>
+        <button id="report-found" class="btn btn-outline" onclick="onReportFound()">
+          <i data-lucide="check-circle-2"></i>
+          Report Found Item
+        </button>
+      </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid">
+      <div class="card">
+        <div class="card-header">
+          <h3>Total Items</h3>
+          <i data-lucide="package"></i>
+        </div>
+        <div class="card-body">
+          <div id="total-items" class="card-number">0</div>
+          <p>In database</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Lost Items</h3>
+          <i data-lucide="alert-circle" class="text-red"></i>
+        </div>
+        <div class="card-body">
+          <div id="lost-items" class="card-number">0</div>
+          <p>Waiting to be found</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Found Items</h3>
+          <i data-lucide="check-circle-2" class="text-green"></i>
+        </div>
+        <div class="card-body">
+          <div id="found-items" class="card-number">0</div>
+          <p>Ready to return</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>My Reports</h3>
+          <i data-lucide="trending-up" class="text-blue"></i>
+        </div>
+        <div class="card-body">
+          <div id="my-items" class="card-number">0</div>
+          <p>Your contributions</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions and Recent Activity -->
+    <section class="actions-grid">
+      <div class="card">
+        <div class="card-header">
+          <h3>Quick Actions</h3>
+          <p>Common tasks you can perform</p>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-outline full" onclick="onReportLost()">
+            <i data-lucide="alert-circle"></i> Report Lost Item
+          </button>
+          <button class="btn btn-outline full" onclick="onReportFound()">
+            <i data-lucide="check-circle-2"></i> Report Found Item
+          </button>
+          <button class="btn btn-outline full" onclick="onBrowseItems()">
+            <i data-lucide="search"></i> Browse All Items
+          </button>
+        </div>
+      </div>
+
+      <div class="card recent-activity">
+        <div class="card-header flex-between">
+          <div>
+            <h3>Recent Activity</h3>
+            <p>Latest reported items in your area</p>
+          </div>
+          <button class="btn btn-ghost" onclick="onBrowseItems()">View All →</button>
+        </div>
+        <div class="card-body" id="recent-items"></div>
+      </div>
+    </section>
+
+    <!-- Categories Overview -->
+    <section class="card">
+      <div class="card-header">
+        <h3>Popular Categories</h3>
+        <p>Most commonly reported item types</p>
+      </div>
+      <div class="card-body grid-4" id="category-list"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+  
+</body>
+</html>
+

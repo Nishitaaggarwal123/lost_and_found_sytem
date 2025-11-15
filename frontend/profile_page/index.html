@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile | Lost & Found</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- Header / Navbar -->
+  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <h1 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+        <i data-lucide="user-circle" class="w-5 h-5 text-blue-600"></i>
+        User Profile
+      </h1>
+
+      <div class="flex items-center gap-3">
+        <button id="backHome" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition">
+          <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i>
+          Dashboard
+        </button>
+        <button id="logout" class="flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1.5 rounded-lg hover:opacity-90 transition">
+          <i data-lucide="log-out" class="w-4 h-4 mr-1"></i>
+          Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Profile Card -->
+    <div class="bg-white border rounded-xl shadow-sm mb-8 p-6">
+      <div class="flex flex-col md:flex-row gap-6">
+        <!-- Avatar -->
+        <div class="flex-shrink-0">
+          <div id="avatar" class="h-32 w-32 rounded-full flex items-center justify-center text-white text-3xl font-semibold bg-gradient-to-br from-blue-600 to-purple-600 shadow-md"></div>
+        </div>
+
+        <!-- Profile View -->
+        <div class="flex-1" id="profileView">
+          <div class="flex justify-between mb-4">
+            <div>
+              <h1 id="userName" class="text-2xl font-semibold text-gray-900 mb-1"></h1>
+              <p id="userBio" class="text-gray-600"></p>
+            </div>
+            <button id="editBtn" class="border px-3 py-1.5 rounded-lg text-sm hover:bg-gray-100 flex items-center transition">
+              <i data-lucide="edit" class="w-4 h-4 mr-1"></i> Edit Profile
+            </button>
+          </div>
+
+          <div class="space-y-2 text-gray-600">
+            <div class="flex items-center gap-2">
+              <i data-lucide="mail" class="w-4 h-4 text-blue-600"></i>
+              <span id="userEmail"></span>
+            </div>
+            <div class="flex items-center gap-2" id="phoneDiv">
+              <i data-lucide="phone" class="w-4 h-4 text-blue-600"></i>
+              <span id="userPhone"></span>
+            </div>
+          </div>
+
+          <hr class="my-6">
+
+          <div class="grid grid-cols-3 text-center">
+            <div>
+              <div id="totalReports" class="text-lg font-semibold text-gray-900"></div>
+              <div class="text-gray-600">Total Reports</div>
+            </div>
+            <div>
+              <div id="lostCount" class="text-lg font-semibold text-gray-900"></div>
+              <div class="text-gray-600">Lost Items</div>
+            </div>
+            <div>
+              <div id="foundCount" class="text-lg font-semibold text-gray-900"></div>
+              <div class="text-gray-600">Found Items</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Form -->
+        <div class="flex-1 hidden" id="editForm">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm mb-1 font-medium">Full Name</label>
+              <input id="editName" class="border w-full rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm mb-1 font-medium">Email</label>
+              <input id="editEmail" type="email" class="border w-full rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm mb-1 font-medium">Phone</label>
+              <input id="editPhone" class="border w-full rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm mb-1 font-medium">Bio</label>
+              <textarea id="editBio" class="border w-full rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none" rows="3"></textarea>
+            </div>
+            <div class="flex gap-2">
+              <button id="saveBtn" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition">Save</button>
+              <button id="cancelBtn" class="border px-4 py-2 rounded-lg hover:bg-gray-100 transition">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="bg-white border rounded-xl shadow-sm">
+      <div class="border-b px-6 py-3 flex gap-4 text-sm font-medium">
+        <button class="tab-btn text-blue-600 border-b-2 border-blue-600" data-tab="all">All</button>
+        <button class="tab-btn text-gray-600 hover:text-blue-600" data-tab="lost">Lost</button>
+        <button class="tab-btn text-gray-600 hover:text-blue-600" data-tab="found">Found</button>
+        <button class="tab-btn text-gray-600 hover:text-blue-600" data-tab="claimed">Claimed</button>
+      </div>
+
+      <div id="tabContent" class="p-6 text-gray-700"></div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost & Found | Login</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-text">
+        <div class="hero-logo">
+          <div class="icon">🔍</div>
+          <h1>Lost & Found</h1>
+        </div>
+        <p>
+          Reuniting people with their belongings. A community-driven platform to help find what matters most.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="stat-number">2,847</div>
+            <div class="stat-label">Items Reported</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">1,523</div>
+            <div class="stat-label">Reunited</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1758599668125-e154250f24bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" alt="Community helping" />
+      </div>
+    </div>
+
+    <div class="wave">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H0Z" fill="white"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- LOGIN/SIGNUP CARD -->
+  <section class="auth">
+    <div class="card">
+      <h2>Welcome</h2>
+      <p class="description">Sign in to report or search for lost and found items</p>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="login">Login</div>
+        <div class="tab" data-tab="signup">Sign Up</div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login" class="tab-content active">
+        <label>Email</label>
+        <input type="email" placeholder="your.email@example.com" required />
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" required />
+        <button type="submit">Sign In</button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signup" class="tab-content">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe" required />
+        <label>Email</label>
+        <input type="email" placeholder="your.email@example.com" required />
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" required />
+        <button type="submit">Create Account</button>
+      </form>
+    </div>
+
+    <div class="demo-hint">
+      💡 Demo: Use any email and password to sign in
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>How It Works</h2>
+    <p>Simple steps to help reunite items with their owners</p>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="icon-box blue">🔍</div>
+        <h3>Report Items</h3>
+        <p>Quickly report lost or found items with detailed descriptions and locations.</p>
+      </div>
+      <div class="feature">
+        <div class="icon-box purple">👥</div>
+        <h3>Search & Match</h3>
+        <p>Browse through reported items and use filters to find what you're looking for.</p>
+      </div>
+      <div class="feature">
+        <div class="icon-box green">💖</div>
+        <h3>Get Reunited</h3>
+        <p>Connect with the reporter and arrange to reunite items with their rightful owners.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

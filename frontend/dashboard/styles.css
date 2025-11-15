@@ -1,0 +1,210 @@
+/* --- Base Layout --- */
+body {
+  font-family: system-ui, sans-serif;
+  background: #f8fafc;
+  color: #1f2937;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+}
+
+/* --- Top Navigation Bar --- */
+.navbar {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-btn {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.profile-btn:hover {
+  background: linear-gradient(to right, #1e40af, #5b21b6);
+}
+
+/* --- Welcome Section --- */
+.welcome-section {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  border-radius: 1rem;
+  padding: 2rem;
+  color: white;
+  margin-top: 1.5rem;
+}
+
+.welcome-section h2 {
+  margin-bottom: 0.5rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-white {
+  background: white;
+  color: #2563eb;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+}
+
+.btn-outline:hover {
+  background: #f3f4f6;
+}
+
+.btn-ghost {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* --- Stats Section --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body {
+  margin-top: 1rem;
+}
+
+.card-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* --- Actions & Recent Activity --- */
+.actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.recent-activity .item {
+  display: flex;
+  gap: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  transition: background 0.2s;
+}
+
+.recent-activity .item:hover {
+  background: #f9fafb;
+}
+
+.item-icon {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-red-100 {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.bg-green-100 {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* --- Utility Text Colors --- */
+.text-red {
+  color: #dc2626;
+}
+
+.text-green {
+  color: #16a34a;
+}
+
+.text-blue {
+  color: #2563eb;
+}
+
+/* --- Categories Grid --- */
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
