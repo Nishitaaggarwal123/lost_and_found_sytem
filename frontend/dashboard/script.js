@@ -12,19 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const welcomeText = document.getElementById("welcome-text");
-  if (welcomeText) {
-    welcomeText.textContent = `Welcome back, ${user.name}!`;
-  }
-
+  if (welcomeText) welcomeText.textContent = `Welcome back, ${user.name}!`;
 
   /* =====================================
-     DEMO DATA + DASHBOARD STATS
+     DEMO DATA
   ====================================== */
   const items = [
-    { id: "1", title: "Wallet",       status: "lost",  category: "Wallet",      description: "Black leather wallet",           location: "Cafeteria",    date: "2025-11-03" },
-    { id: "2", title: "Bag",          status: "found", category: "Bag",         description: "Blue backpack",                 location: "Library",      date: "2025-11-02" },
-    { id: "3", title: "Headphones",   status: "lost",  category: "Electronics", description: "Sony wireless headset",         location: "Auditorium",   date: "2025-11-04" },
-    { id: "4", title: "Car Keys",     status: "found", category: "Keys",        description: "Silver keychain (Honda logo)",  location: "Parking Lot",  date: "2025-11-01" }
+    { id: "1", title: "Wallet", status: "lost", category: "Wallet", description: "Black leather wallet", location: "Cafeteria", date: "2025-11-03" },
+    { id: "2", title: "Bag", status: "found", category: "Bag", description: "Blue backpack", location: "Library", date: "2025-11-02" },
+    { id: "3", title: "Headphones", status: "lost", category: "Electronics", description: "Sony wireless headset", location: "Auditorium", date: "2025-11-04" },
+    { id: "4", title: "Car Keys", status: "found", category: "Keys", description: "Silver keychain (Honda logo)", location: "Parking Lot", date: "2025-11-01" }
   ];
 
   const lostItems  = items.filter(i => i.status === "lost");
@@ -32,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const myItems    = items.slice(0, 2);
   const recentItems = items.slice(0, 3);
 
-  const setText = (id, value) => {
+  const setText = (id, val) => {
     const el = document.getElementById(id);
-    if (el) el.textContent = value;
+    if (el) el.textContent = val;
   };
 
   setText("total-items", items.length);
@@ -50,44 +47,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (recentList) {
     recentItems.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "item";
-
-      div.innerHTML = `
-        <div class="item-icon ${item.status === "lost" ? "bg-red-100" : "bg-green-100"}">
-          <i data-lucide="${item.status === "lost" ? "alert-circle" : "check-circle-2"}"></i>
-        </div>
-        <div>
-          <h4>${item.title} <span class="badge ${item.status}">${item.status}</span></h4>
-          <p>${item.description}</p>
-          <small>📍 ${item.location} | 🗓 ${new Date(item.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</small>
+      recentList.innerHTML += `
+        <div class="item">
+          <div class="item-icon ${item.status === "lost" ? "bg-red-100" : "bg-green-100"}">
+            <i data-lucide="${item.status}"></i>
+          </div>
+          <div>
+            <h4>${item.title} <span class="badge ${item.status}">${item.status}</span></h4>
+            <p>${item.description}</p>
+            <small>📍 ${item.location} | 🗓 ${item.date}</small>
+          </div>
         </div>
       `;
-
-      recentList.appendChild(div);
     });
   }
 
 
   /* =====================================
-     POPULAR CATEGORIES (HTML VERSION USED)
+     POPULAR CATEGORIES COUNTS
   ====================================== */
-  const categories = ["Wallet", "Bag", "Electronics", "Keys"];
-  const categoryBoxes = document.querySelectorAll(".category-box");
-
-  categoryBoxes.forEach((box, index) => {
-    const category = categories[index];
-    const count = items.filter(i => i.category === category).length;
-
-    box.querySelector(".category-count").textContent = count;
+  const catNames = ["Wallet", "Bag", "Electronics", "Keys"];
+  document.querySelectorAll(".category-box").forEach((box, i) => {
+    box.querySelector(".category-count").textContent =
+      items.filter(it => it.category === catNames[i]).length;
   });
-
 
   if (typeof lucide !== "undefined") lucide.createIcons();
 
 
   /* =====================================
-     MODAL OPEN/CLOSE FUNCTIONS
+     MODALS
   ====================================== */
   function openModal(id) {
     document.getElementById(id).style.display = "flex";
@@ -97,72 +86,140 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(id).style.display = "none";
   }
 
+  document.querySelectorAll("#report-lost-btn").forEach(btn =>
+    btn.addEventListener("click", () => openModal("lostModal"))
+  );
 
-  /* =====================================
-     OPEN MODAL BUTTONS
-  ====================================== */
-  document.querySelectorAll("#report-lost-btn").forEach(btn => {
-    btn.addEventListener("click", () => openModal("lostModal"));
-  });
+  document.querySelectorAll("#report-found-btn").forEach(btn =>
+    btn.addEventListener("click", () => openModal("foundModal"))
+  );
 
-  document.querySelectorAll("#report-found-btn").forEach(btn => {
-    btn.addEventListener("click", () => openModal("foundModal"));
-  });
+  document.getElementById("closeLostModal").onclick = () => closeModal("lostModal");
+  document.getElementById("closeFoundModal").onclick = () => closeModal("foundModal");
 
-
-  /* =====================================
-     CLOSE MODAL BUTTONS
-  ====================================== */
-  document.getElementById("closeLostModal")
-    .addEventListener("click", () => closeModal("lostModal"));
-
-  document.getElementById("closeFoundModal")
-    .addEventListener("click", () => closeModal("foundModal"));
-
-
-  /* =====================================
-     CANCEL BUTTON (FOUND FORM ONLY)
-  ====================================== */
   const cancelFound = document.getElementById("cancelFoundForm");
-  if (cancelFound) {
-    cancelFound.addEventListener("click", () => closeModal("foundModal"));
-  }
+  if (cancelFound) cancelFound.onclick = () => closeModal("foundModal");
 
-
-  /* =====================================
-     CLOSE MODAL WHEN CLICKING OUTSIDE
-  ====================================== */
-  window.addEventListener("click", (e) => {
-    if (e.target.id === "lostModal")  closeModal("lostModal");
+  window.onclick = (e) => {
+    if (e.target.id === "lostModal") closeModal("lostModal");
     if (e.target.id === "foundModal") closeModal("foundModal");
-  });
+  };
 
 
   /* =====================================
-     BROWSE ITEMS
+     DASHBOARD ↔ BROWSE TOGGLE SYSTEM
   ====================================== */
-  const browseItems = document.getElementById("browse-items-btn");
-  if (browseItems) {
-    browseItems.addEventListener("click", () => alert("Browsing all items..."));
+
+  const dashboardBtn = document.getElementById("dashboard-link");
+  const browseBtn = document.getElementById("browse-link");
+
+  const browseSection = document.getElementById("browseSection");
+  const welcomeSec = document.querySelector(".welcome-section");
+  const statsGrid = document.querySelector(".stats-grid");
+  const actionsGrid = document.querySelector(".actions-grid");
+  const categoriesCard = document.querySelector(".categories-card");
+
+  function showDashboard() {
+    dashboardBtn.classList.add("active");
+    browseBtn.classList.remove("active");
+
+    browseSection.style.display = "none";
+    welcomeSec.style.display = "block";
+    statsGrid.style.display = "grid";
+    actionsGrid.style.display = "grid";
+    categoriesCard.style.display = "block";
+  }
+
+  function showBrowse() {
+    browseBtn.classList.add("active");
+    dashboardBtn.classList.remove("active");
+
+    browseSection.style.display = "block";
+    welcomeSec.style.display = "none";
+    statsGrid.style.display = "none";
+    actionsGrid.style.display = "none";
+    categoriesCard.style.display = "none";
+
+    loadBrowseItems("all");
+  }
+
+  dashboardBtn.onclick = showDashboard;
+  browseBtn.onclick = showBrowse;
+
+
+  /* This makes BOTH buttons open browse page */
+  function openBrowsePage() {
+    showBrowse();
+  }
+
+  document.getElementById("browse-items-btn").onclick = openBrowsePage;
+
+  /* =====================================
+     LOAD BROWSE ITEMS
+  ====================================== */
+  function loadBrowseItems(filter = "all") {
+    const container = document.getElementById("browseList");
+    container.innerHTML = "";
+
+    items
+      .filter(i => filter === "all" || i.status === filter)
+      .forEach(item => {
+        container.innerHTML += `
+        <div class="browse-card">
+          <h3>${item.title}</h3>
+          <div class="browse-category">${item.category}</div>
+          <p>${item.description}</p>
+          <div class="browse-info">
+            📍 ${item.location}
+            <span>🗓 ${item.date}</span>
+          </div>
+        </div>`;
+      });
+  }
+
+  /* Browse filter buttons */
+  document.getElementById("showAll").onclick = () => {
+    setActive("showAll");
+    loadBrowseItems("all");
+  };
+
+  document.getElementById("showLost").onclick = () => {
+    setActive("showLost");
+    loadBrowseItems("lost");
+  };
+
+  document.getElementById("showFound").onclick = () => {
+    setActive("showFound");
+    loadBrowseItems("found");
+  };
+
+  function setActive(id) {
+    document.querySelectorAll(".browse-btn").forEach(b =>
+      b.classList.remove("active-browse")
+    );
+    document.getElementById(id).classList.add("active-browse");
   }
 
 
   /* =====================================
-     LOGOUT BUTTON
+     LOGOUT
   ====================================== */
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("user");
-      window.location.href = "../login_page/index.html";
-    });
-  }
+  document.getElementById("logout-btn").onclick = () => {
+    localStorage.removeItem("user");
+    window.location.href = "../login_page/index.html";
+  };
 
 });
-// Go to Profile Page
+
+
+/* =====================================
+   PROFILE BUTTON (OUTSIDE DOMContentLoaded)
+===================================== */
 const profileBtn = document.getElementById("profile-link");
 if (profileBtn) {
-  profileBtn.addEventListener("click", () => {
+  profileBtn.onclick = () => {
     window.location.href = "../profile_page/index.html";
-  });
+  };
 }
+
+

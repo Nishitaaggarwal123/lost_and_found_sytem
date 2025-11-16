@@ -264,11 +264,34 @@
         </div>
       </div>
     </div>
-    
+    <!-- ===========================
+      BROWSE SECTION (Hidden by default)
+=========================== -->
+<section id="browseSection" style="display:none; margin-top:2rem;">
+
+  <h2 style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">
+    Browse Items
+  </h2>
+
+  <!-- Toggle Buttons -->
+  <div class="browse-toggle">
+    <button id="showAll" class="browse-btn active-browse">All</button>
+    <button id="showLost" class="browse-btn">Lost</button>
+    <button id="showFound" class="browse-btn">Found</button>
+  </div>
+
+  <!-- Browse List -->
+  <div id="browseList" class="browse-grid">
+    <!-- JS will fill cards here -->
+  </div>
+
+</section>
+
 
   <script src="script.js"></script>
 </body>
-</html>
+</html> 
+
 
 
 
