@@ -13,12 +13,32 @@ body {
   padding: 2rem;
 }
 
-/* --- Top Navigation Bar --- */
+/* ---------------------------------------------------------
+   TOP BAR (Logout Section)
+--------------------------------------------------------- */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.top-bar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   TOP NAVIGATION BAR
+--------------------------------------------------------- */
 .navbar {
   background: white;
   border-bottom: 1px solid #e5e7eb;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
   padding: 0.75rem 2rem;
   position: sticky;
@@ -35,6 +55,37 @@ body {
   gap: 0.5rem;
 }
 
+.nav-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Navigation Tabs */
+.nav-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 8px 12px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.nav-tab:hover {
+  border-bottom: 3px solid #2563eb;
+  color: #2563eb;
+}
+
+.nav-tab i {
+  width: 18px;
+  height: 18px;
+}
+
+/* Profile Button (Right Side) */
 .profile-btn {
   background: linear-gradient(to right, #2563eb, #7c3aed);
   color: white;
@@ -53,7 +104,9 @@ body {
   background: linear-gradient(to right, #1e40af, #5b21b6);
 }
 
-/* --- Welcome Section --- */
+/* ---------------------------------------------------------
+   WELCOME SECTION
+--------------------------------------------------------- */
 .welcome-section {
   background: linear-gradient(to right, #2563eb, #7c3aed);
   border-radius: 1rem;
@@ -72,41 +125,67 @@ body {
   margin-top: 1.5rem;
 }
 
+/* ---------------------------------------------------------
+   BUTTONS (UPDATED + CLEAN)
+--------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  border: none;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.btn-white {
-  background: white;
-  color: #2563eb;
-}
-
-.btn-outline {
-  background: transparent;
   border: 1px solid #d1d5db;
-  color: #1f2937;
+  font-weight: 500;
+  font-size: 0.95rem;
+  background: white;
+  color: black;
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+}
+
+/* White Action Buttons (Report Lost, Found, Browse) */
+.btn_down {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  font-weight: 500;
+  font-size: 0.95rem;
+  background: white;
+  color: black;
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+}
+
+/* Hover effect for white action buttons */
+.btn_down:hover {
+  background: #e5e7eb;
+  border-color: #cbd5e1;
+}
+
+/* Icons inherit button color */
+.btn_down svg {
+  stroke: currentColor;
+  width: 20px;
+  height: 20px;
+}
+
+/* Gradient Button (Logout button only) */
+.btn-outline {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  color: white !important;
+  border: none;
 }
 
 .btn-outline:hover {
-  background: #f3f4f6;
+  background: linear-gradient(to right, #1e40af, #5b21b6);
 }
 
-.btn-ghost {
-  background: none;
-  border: none;
-  color: #2563eb;
-  cursor: pointer;
-}
-
-/* --- Stats Section --- */
+/* ---------------------------------------------------------
+   STATS SECTION
+--------------------------------------------------------- */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -117,18 +196,22 @@ body {
 .card {
   background: white;
   border-radius: 0.75rem;
+  gap: 6px;
   border: 1px solid #e5e7eb;
   padding: 1rem;
 }
 
 .card-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
 }
 
 .card-body {
-  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .card-number {
@@ -136,7 +219,9 @@ body {
   font-weight: bold;
 }
 
-/* --- Actions & Recent Activity --- */
+/* ---------------------------------------------------------
+   ACTIONS & RECENT ACTIVITY
+--------------------------------------------------------- */
 .actions-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -166,37 +251,25 @@ body {
   justify-content: center;
 }
 
-.bg-red-100 {
-  background: #fee2e2;
-  color: #dc2626;
-}
+.bg-red-100 { background: #fee2e2; color: #dc2626; }
+.bg-green-100 { background: #dcfce7; color: #16a34a; }
 
-.bg-green-100 {
-  background: #dcfce7;
-  color: #16a34a;
-}
+.text-red { color: #dc2626; }
+.text-green { color: #16a34a; }
+.text-blue { color: #2563eb; }
 
-/* --- Utility Text Colors --- */
-.text-red {
-  color: #dc2626;
-}
-
-.text-green {
-  color: #16a34a;
-}
-
-.text-blue {
-  color: #2563eb;
-}
-
-/* --- Categories Grid --- */
+/* ---------------------------------------------------------
+   CATEGORIES GRID
+--------------------------------------------------------- */
 .grid-4 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 1rem;
 }
 
-/* --- Responsive --- */
+/* ---------------------------------------------------------
+   RESPONSIVENESS
+--------------------------------------------------------- */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -207,4 +280,140 @@ body {
   .actions-grid {
     grid-template-columns: 1fr;
   }
+
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
 }
+
+/* ---------------------------------------------------------
+   POPUP MODAL
+--------------------------------------------------------- */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(3px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  width: 90%;
+  max-width: 550px;
+  border-radius: 1rem;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+  animation: modalPop 0.25s ease-out;
+  position: relative;
+}
+
+@keyframes modalPop {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #475569;
+}
+
+.modal form {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal input,
+.modal select,
+.modal textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  width: 100%;
+  font-size: 0.95rem;
+  background: #ffffff;
+}
+
+.modal textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ============================
+   FORM BUTTONS (MODAL)
+============================ */
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;  /* Ensures buttons align left */
+  align-items: center;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+/* Cancel Button */
+.form-cancel-btn {
+  background: white !important;
+  color: black !important;
+  border: 1px solid #d1d5db !important;
+  padding: 0.55rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+
+/* Submit Button */
+.form-submit-btn {
+  background: #16a34a !important; /* Green */
+  color: white !important;
+  border: none !important;
+  padding: 0.55rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.25s ease;
+}
+
+
+
+
+.category-box {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(to bottom right, #f9fafb, #ffffff);
+  transition: box-shadow 0.2s ease;
+}
+
+.category-box:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.category-count {
+  color: #111827;
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.category-name {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
