@@ -159,4 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
-
+// Go to Profile Page
+const profileBtn = document.getElementById("profile-link");
+if (profileBtn) {
+  profileBtn.addEventListener("click", () => {
+    window.location.href = "../profile_page/index.html";
+  });
+}
