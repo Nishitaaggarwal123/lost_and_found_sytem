@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (welcomeText) welcomeText.textContent = `Welcome back, ${user.name}!`;
 
   /* =====================================
-     DEMO DATA
+     ITEMS DATA
   ====================================== */
   const items = [
-    { id: "1", title: "Wallet", status: "lost", category: "Wallet", description: "Black leather wallet", location: "Cafeteria", date: "2025-11-03" },
-    { id: "2", title: "Bag", status: "found", category: "Bag", description: "Blue backpack", location: "Library", date: "2025-11-02" },
-    { id: "3", title: "Headphones", status: "lost", category: "Electronics", description: "Sony wireless headset", location: "Auditorium", date: "2025-11-04" },
-    { id: "4", title: "Car Keys", status: "found", category: "Keys", description: "Silver keychain (Honda logo)", location: "Parking Lot", date: "2025-11-01" }
+    { id: "1", title: "Wallet", status: "lost", category: "Wallet", description: "Black leather wallet", location: "Cafeteria", date: "2025-11-03", contactName: "Rahul Sharma", contactInfo: "rahul@gmail.com" },
+    { id: "2", title: "Bag", status: "found", category: "Bag", description: "Blue backpack", location: "Library", date: "2025-11-02", contactName: "Sarah Singh", contactInfo: "sarah@gmail.com" },
+    { id: "3", title: "Headphones", status: "lost", category: "Electronics", description: "Sony wireless headset", location: "Auditorium", date: "2025-11-04", contactName: "Arjun Mehta", contactInfo: "arjun@gmail.com" },
+    { id: "4", title: "Car Keys", status: "found", category: "Keys", description: "Silver keychain (Honda logo)", location: "Parking Lot", date: "2025-11-01", contactName: "Neha Verma", contactInfo: "neha@gmail.com" }
   ];
 
   const lostItems  = items.filter(i => i.status === "lost");
@@ -62,16 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-
-  /* =====================================
-     POPULAR CATEGORIES COUNTS
-  ====================================== */
-  const catNames = ["Wallet", "Bag", "Electronics", "Keys"];
-  document.querySelectorAll(".category-box").forEach((box, i) => {
-    box.querySelector(".category-count").textContent =
-      items.filter(it => it.category === catNames[i]).length;
-  });
-
   if (typeof lucide !== "undefined") lucide.createIcons();
 
 
@@ -107,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================
-     DASHBOARD ↔ BROWSE TOGGLE SYSTEM
+     DASHBOARD ↔ BROWSE TOGGLE
   ====================================== */
 
   const dashboardBtn = document.getElementById("dashboard-link");
@@ -146,16 +136,10 @@ document.addEventListener("DOMContentLoaded", () => {
   dashboardBtn.onclick = showDashboard;
   browseBtn.onclick = showBrowse;
 
-
-  /* This makes BOTH buttons open browse page */
-  function openBrowsePage() {
-    showBrowse();
-  }
-
-  document.getElementById("browse-items-btn").onclick = openBrowsePage;
+  document.getElementById("browse-items-btn").onclick = showBrowse;
 
   /* =====================================
-     LOAD BROWSE ITEMS
+     BROWSE ITEMS WITH VIEW DETAILS
   ====================================== */
   function loadBrowseItems(filter = "all") {
     const container = document.getElementById("browseList");
@@ -173,6 +157,10 @@ document.addEventListener("DOMContentLoaded", () => {
             📍 ${item.location}
             <span>🗓 ${item.date}</span>
           </div>
+
+          <button class="view-btn" onclick="viewDetails('${item.id}')">
+            View Details
+          </button>
         </div>`;
       });
   }
@@ -200,7 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(id).classList.add("active-browse");
   }
 
-
   /* =====================================
      LOGOUT
   ====================================== */
@@ -213,7 +200,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =====================================
-   PROFILE BUTTON (OUTSIDE DOMContentLoaded)
+   VIEW DETAILS FUNCTION
+===================================== */
+function viewDetails(itemId) {
+
+  const items = [
+    { id: "1", title: "Wallet", status: "lost", category: "Wallet", description: "Black leather wallet", location: "Cafeteria", date: "2025-11-03", contactName: "Rahul Sharma", contactInfo: "rahul@gmail.com" },
+    { id: "2", title: "Bag", status: "found", category: "Bag", description: "Blue backpack", location: "Library", date: "2025-11-02", contactName: "Sarah Singh", contactInfo: "sarah@gmail.com" },
+    { id: "3", title: "Headphones", status: "lost", category: "Electronics", description: "Sony wireless headset", location: "Auditorium", date: "2025-11-04", contactName: "Arjun Mehta", contactInfo: "arjun@gmail.com" },
+    { id: "4", title: "Car Keys", status: "found", category: "Keys", description: "Silver keychain (Honda logo)", location: "Parking Lot", date: "2025-11-01", contactName: "Neha Verma", contactInfo: "neha@gmail.com" }
+  ];
+
+  const selectedItem = items.find(i => i.id === itemId);
+
+  localStorage.setItem("selectedItem", JSON.stringify(selectedItem));
+
+  window.location.href = "../item_details/index.html";
+}
+
+
+/* =====================================
+   PROFILE BUTTON
 ===================================== */
 const profileBtn = document.getElementById("profile-link");
 if (profileBtn) {
@@ -221,5 +228,3 @@ if (profileBtn) {
     window.location.href = "../profile_page/index.html";
   };
 }
-
-

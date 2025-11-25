@@ -1,28 +1,21 @@
-// Tab switching logic
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    // Remove active states
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-    // Activate clicked tab and related content
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.tab).classList.add('active');
-  });
-});
-
-// 🔹 Handle Login Form Submission
+/// 🔹 Handle Login Form Submission
 document.getElementById('login').addEventListener('submit', e => {
   e.preventDefault();
 
   const email = e.target.querySelector('input[type="email"]').value.trim();
-  const name = email.split('@')[0]; // Extract username before @
+  const name = email.split('@')[0];
 
-  // Store user data (simulate login)
-  const user = { name, email };
+  // Full user object
+  const user = {
+    id: Date.now().toString(),
+    name: name,
+    email: email,
+    phone: "555-1234",
+    bio: "Helping reunite lost items with their owners."
+  };
+
   localStorage.setItem('user', JSON.stringify(user));
 
-  // Redirect to dashboard
   window.location.href = '../dashboard/index.html';
 });
 
@@ -38,13 +31,17 @@ document.getElementById('signup').addEventListener('submit', e => {
     return;
   }
 
-  // Store new user data (simulate account creation)
-  const user = { name, email };
+  const user = {
+    id: Date.now().toString(),
+    name: name,
+    email: email,
+    phone: "",
+    bio: ""
+  };
+
   localStorage.setItem('user', JSON.stringify(user));
 
-  alert('🎉 Account created successfully! Redirecting to dashboard...');
-
-  // Redirect to dashboard
+  alert('🎉 Account created successfully!');
   window.location.href = '../dashboard/index.html';
 });
 
@@ -52,7 +49,6 @@ document.getElementById('signup').addEventListener('submit', e => {
 document.addEventListener('DOMContentLoaded', () => {
   const user = JSON.parse(localStorage.getItem('user'));
   if (user) {
-    // If already logged in, skip login and go directly to dashboard
     window.location.href = '../dashboard/index.html';
   }
 });

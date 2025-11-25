@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Item Details</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <h2>Item Details</h2>
+  <button onclick="goHome()">Back</button>
+</div>
+
+<div id="itemDetails"></div>
+
+<!-- Claim Modal -->
+<div id="claimModal" class="modal">
+  <div class="modal-box">
+    <h3>Claim Item</h3>
+
+    <label>Why do you think this item is yours?</label>
+    <textarea id="claimReason"></textarea>
+
+    <button onclick="submitClaim()">Submit Claim</button>
+    <button onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
