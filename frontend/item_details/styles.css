@@ -1,43 +1,196 @@
+/* PAGE */
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
+  background: #f5f6fa;
+  margin: 0;
+  padding: 40px;
 }
 
-.header {
+/* HEADER */
+.top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 25px;
 }
 
-#itemDetails img {
-  margin: 10px 0;
-  max-width: 250px;
-  border-radius: 5px;
+.top-header h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
 }
 
-button {
-  padding: 8px 12px;
-  margin-top: 10px;
+
+/* CARD */
+.details-card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 900px;
+  margin: auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+/* TITLE */
+.item-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+/* BADGE ROW (Below Title) */
+.badge-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* BADGES */
+.badge-status {
+  padding: 6px 14px;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 16px;
+}
+
+.badge-category {
+  padding: 6px 14px;
+  background: #eee;
+  border-radius: 16px;
+}
+
+/* DESCRIPTION SECTION */
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 25px;
+  margin-bottom: 8px;
+}
+
+.description-text {
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 25px;
+}
+
+/* DIVIDER */
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 25px 0;
+}
+
+/* 2 COLUMN GRID */
+.detail-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.detail-box h4 {
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.detail-box p {
+  font-size: 15px;
+  color: #4b5563;
+}
+
+/* REPORTED BY */
+.reported {
+  margin-top: 20px;
+}
+
+/* CLAIM BUTTON (full width) */
+.claim-btn {
+  width: 100%;
+  padding: 14px;
+  background:linear-gradient(to right, #2563eb, #7c3aed);
+  color: white;
+  border: none;
+  font-size: 18px;
+  border-radius: 8px;
   cursor: pointer;
+  margin-top: 30px;
 }
 
-/* Modal */
+.claim-btn:hover {
+  background: #1e40af;
+}
+
+/* IMAGE */
+.item-image {
+  width: 100%;
+  margin-top: 25px;
+  border-radius: 12px;
+}
+
+/* ===================================================
+   UPDATED BACK BUTTON (Gradient Style)
+=================================================== */
+.back-btn-right {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  color: #f4f6f8;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;     /* Aligns right */
+  margin-bottom: 20px;
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.back-btn-right:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+/* MODAL */
 .modal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-box {
   background: white;
-  width: 300px;
-  margin: 15% auto;
-  padding: 20px;
+  padding: 25px;
+  width: 360px;
+  border-radius: 12px;
+}
+
+.modal-box textarea {
+  width: 100%;
+  height: 90px;
+  margin: 10px 0;
+  padding: 8px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary {
+  padding: 10px 16px;
+  background: #2563eb;
+  border: none;
+  color: white;
   border-radius: 6px;
 }
 
-textarea {
-  width: 100%;
-  height: 80px;
+.btn-secondary {
+  padding: 10px 16px;
+  background: linear-gradient(to bottom right, #f9fafb, #ffffff);
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
 }
+

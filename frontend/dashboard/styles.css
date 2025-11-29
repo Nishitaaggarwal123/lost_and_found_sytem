@@ -491,3 +491,33 @@ body {
   color:#4b5563;
 }
 
+/* view button in the cards */
+.button-right {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;   /* moves only button to the right */
+}
+
+
+.view-btn {
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 0.7rem;
+  width: auto;
+  display: inline-block;
+  transition: 0.25s ease;
+}
+
+.view-btn:hover {
+  background: #1e4ed8;
+  border-color: #1e4ed8;
+  transform: translateY(-2px);
+}
+
+  

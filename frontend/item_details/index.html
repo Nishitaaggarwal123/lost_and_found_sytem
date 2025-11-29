@@ -3,15 +3,19 @@
 <head>
   <title>Item Details</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
 
-<div class="header">
+<header class="top-header">
   <h2>Item Details</h2>
-  <button onclick="goHome()">Back</button>
-</div>
+  <button class="back-btn-right" onclick="goHome()">Back</button>
+</header>
 
-<div id="itemDetails"></div>
+<div class="details-card">
+  <div id="itemDetails"></div>
+</div>
 
 <!-- Claim Modal -->
 <div id="claimModal" class="modal">
@@ -21,11 +25,19 @@
     <label>Why do you think this item is yours?</label>
     <textarea id="claimReason"></textarea>
 
-    <button onclick="submitClaim()">Submit Claim</button>
-    <button onclick="closeModal()">Cancel</button>
+    <div class="modal-buttons">
+      <button class="btn-primary" onclick="submitClaim()">Submit Claim</button>
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+    </div>
   </div>
 </div>
 
 <script src="script.js"></script>
+<script>
+  if (typeof lucide !== "undefined") lucide.createIcons();
+</script>
+
 </body>
 </html>
+
+

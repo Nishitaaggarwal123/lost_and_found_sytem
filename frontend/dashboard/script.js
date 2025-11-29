@@ -144,26 +144,29 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadBrowseItems(filter = "all") {
     const container = document.getElementById("browseList");
     container.innerHTML = "";
-
+  
     items
       .filter(i => filter === "all" || i.status === filter)
       .forEach(item => {
         container.innerHTML += `
-        <div class="browse-card">
-          <h3>${item.title}</h3>
-          <div class="browse-category">${item.category}</div>
-          <p>${item.description}</p>
-          <div class="browse-info">
-            📍 ${item.location}
-            <span>🗓 ${item.date}</span>
-          </div>
-
-          <button class="view-btn" onclick="viewDetails('${item.id}')">
-            View Details
-          </button>
-        </div>`;
+          <div class="browse-card">
+            <h3>${item.title}</h3>
+            <div class="browse-category">${item.category}</div>
+            <p>${item.description}</p>
+            <div class="browse-info">
+              📍 ${item.location}
+              <span>🗓 ${item.date}</span>
+            </div>
+  
+            <div class="button-right">
+              <button class="view-btn" onclick="viewDetails('${item.id}')">
+                View Details
+              </button>
+            </div>
+          </div>`;
       });
   }
+  
 
   /* Browse filter buttons */
   document.getElementById("showAll").onclick = () => {

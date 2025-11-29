@@ -140,3 +140,12 @@ input:focus, textarea:focus, select:focus {
   gap: 10px;
   margin-top: 20px;
 }
+
+#usersList::-webkit-scrollbar {
+  width: 6px;
+}
+
+#usersList::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
