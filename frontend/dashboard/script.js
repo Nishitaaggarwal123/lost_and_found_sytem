@@ -1,52 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* =====================================
-     USER CHECK + WELCOME MESSAGE
-  ====================================== */
-  const storedUser = localStorage.getItem("user");
-  const user = storedUser ? JSON.parse(storedUser) : null;
-
+  /* =======================
+      USER CHECK
+  ======================== */
+  const user = JSON.parse(localStorage.getItem("user"));
   if (!user) {
     window.location.href = "../login_page/index.html";
     return;
   }
 
-  const welcomeText = document.getElementById("welcome-text");
-  if (welcomeText) welcomeText.textContent = `Welcome back, ${user.name}!`;
-
-  /* =====================================
-     ITEMS DATA
-  ====================================== */
-  const items = [
-    { id: "1", title: "Wallet", status: "lost", category: "Wallet", description: "Black leather wallet", location: "Cafeteria", date: "2025-11-03", contactName: "Rahul Sharma", contactInfo: "rahul@gmail.com" },
-    { id: "2", title: "Bag", status: "found", category: "Bag", description: "Blue backpack", location: "Library", date: "2025-11-02", contactName: "Sarah Singh", contactInfo: "sarah@gmail.com" },
-    { id: "3", title: "Headphones", status: "lost", category: "Electronics", description: "Sony wireless headset", location: "Auditorium", date: "2025-11-04", contactName: "Arjun Mehta", contactInfo: "arjun@gmail.com" },
-    { id: "4", title: "Car Keys", status: "found", category: "Keys", description: "Silver keychain (Honda logo)", location: "Parking Lot", date: "2025-11-01", contactName: "Neha Verma", contactInfo: "neha@gmail.com" }
-  ];
-
-  const lostItems  = items.filter(i => i.status === "lost");
-  const foundItems = items.filter(i => i.status === "found");
-  const myItems    = items.slice(0, 2);
-  const recentItems = items.slice(0, 3);
-
-  const setText = (id, val) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  };
-
-  setText("total-items", items.length);
-  setText("lost-items", lostItems.length);
-  setText("found-items", foundItems.length);
-  setText("my-items", myItems.length);
+  document.getElementById("welcome-text").textContent =
+    `Welcome back, ${user.name}!`;
 
 
-  /* =====================================
-     RECENT ACTIVITY
-  ====================================== */
-  const recentList = document.getElementById("recent-items");
+  /* =======================
+      LOAD ITEMS (LOCAL STORAGE)
+  ======================== */
+  let items = JSON.parse(localStorage.getItem("items")) || [];
 
-  if (recentList) {
-    recentItems.forEach(item => {
+
+
+  /* =======================
+      UPDATE DASHBOARD STATS
+  ======================== */
+  function updateDashboard() {
+    const lost = items.filter(i => i.status === "lost").length;
+    const found = items.filter(i => i.status === "found").length;
+
+    document.getElementById("total-items").textContent = items.length;
+    document.getElementById("lost-items").textContent = lost;
+    document.getElementById("found-items").textContent = found;
+    document.getElementById("my-items").textContent = items.length; 
+  }
+
+
+  /* =======================
+      RECENT ITEMS
+  ======================== */
+  function loadRecent() {
+    const recentList = document.getElementById("recent-items");
+    recentList.innerHTML = "";
+
+    items.slice(-3).reverse().forEach(item => {
       recentList.innerHTML += `
         <div class="item">
           <div class="item-icon ${item.status === "lost" ? "bg-red-100" : "bg-green-100"}">
@@ -60,93 +55,20 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
     });
+
+    lucide.createIcons();
   }
 
-  if (typeof lucide !== "undefined") lucide.createIcons();
 
-
-  /* =====================================
-     MODALS
-  ====================================== */
-  function openModal(id) {
-    document.getElementById(id).style.display = "flex";
-  }
-
-  function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-  }
-
-  document.querySelectorAll("#report-lost-btn").forEach(btn =>
-    btn.addEventListener("click", () => openModal("lostModal"))
-  );
-
-  document.querySelectorAll("#report-found-btn").forEach(btn =>
-    btn.addEventListener("click", () => openModal("foundModal"))
-  );
-
-  document.getElementById("closeLostModal").onclick = () => closeModal("lostModal");
-  document.getElementById("closeFoundModal").onclick = () => closeModal("foundModal");
-
-  const cancelFound = document.getElementById("cancelFoundForm");
-  if (cancelFound) cancelFound.onclick = () => closeModal("foundModal");
-
-  window.onclick = (e) => {
-    if (e.target.id === "lostModal") closeModal("lostModal");
-    if (e.target.id === "foundModal") closeModal("foundModal");
-  };
-
-
-  /* =====================================
-     DASHBOARD ↔ BROWSE TOGGLE
-  ====================================== */
-
-  const dashboardBtn = document.getElementById("dashboard-link");
-  const browseBtn = document.getElementById("browse-link");
-
-  const browseSection = document.getElementById("browseSection");
-  const welcomeSec = document.querySelector(".welcome-section");
-  const statsGrid = document.querySelector(".stats-grid");
-  const actionsGrid = document.querySelector(".actions-grid");
-  const categoriesCard = document.querySelector(".categories-card");
-
-  function showDashboard() {
-    dashboardBtn.classList.add("active");
-    browseBtn.classList.remove("active");
-
-    browseSection.style.display = "none";
-    welcomeSec.style.display = "block";
-    statsGrid.style.display = "grid";
-    actionsGrid.style.display = "grid";
-    categoriesCard.style.display = "block";
-  }
-
-  function showBrowse() {
-    browseBtn.classList.add("active");
-    dashboardBtn.classList.remove("active");
-
-    browseSection.style.display = "block";
-    welcomeSec.style.display = "none";
-    statsGrid.style.display = "none";
-    actionsGrid.style.display = "none";
-    categoriesCard.style.display = "none";
-
-    loadBrowseItems("all");
-  }
-
-  dashboardBtn.onclick = showDashboard;
-  browseBtn.onclick = showBrowse;
-
-  document.getElementById("browse-items-btn").onclick = showBrowse;
-
-  /* =====================================
-     BROWSE ITEMS WITH VIEW DETAILS
-  ====================================== */
+  /* =======================
+      BROWSE ITEMS
+  ======================== */
   function loadBrowseItems(filter = "all") {
     const container = document.getElementById("browseList");
     container.innerHTML = "";
-  
+
     items
-      .filter(i => filter === "all" || i.status === filter)
+      .filter(item => filter === "all" || item.status === filter)
       .forEach(item => {
         container.innerHTML += `
           <div class="browse-card">
@@ -157,77 +79,187 @@ document.addEventListener("DOMContentLoaded", () => {
               📍 ${item.location}
               <span>🗓 ${item.date}</span>
             </div>
-  
+
             <div class="button-right">
               <button class="view-btn" onclick="viewDetails('${item.id}')">
                 View Details
               </button>
             </div>
-          </div>`;
+          </div>
+        `;
       });
   }
-  
 
-  /* Browse filter buttons */
-  document.getElementById("showAll").onclick = () => {
-    setActive("showAll");
+
+  /* =======================
+      MODALS (FULLY FIXED)
+  ======================== */
+  const lostModal = document.getElementById("lostModal");
+  const foundModal = document.getElementById("foundModal");
+
+  document.querySelectorAll(".report-lost-btn").forEach(btn =>
+    btn.addEventListener("click", () => lostModal.style.display = "flex")
+  );
+
+  document.querySelectorAll(".report-found-btn").forEach(btn =>
+    btn.addEventListener("click", () => foundModal.style.display = "flex")
+  );
+
+  document.getElementById("closeLostModal").onclick = () =>
+    lostModal.style.display = "none";
+
+  document.getElementById("closeFoundModal").onclick = () =>
+    foundModal.style.display = "none";
+
+  document.getElementById("cancelFoundForm").onclick = () =>
+    foundModal.style.display = "none";
+
+  window.onclick = event => {
+    if (event.target === lostModal) lostModal.style.display = "none";
+    if (event.target === foundModal) foundModal.style.display = "none";
+  };
+
+
+  /* =======================
+      LOST FORM SUBMIT
+  ======================== */
+  const lostForm = document.querySelector("#lostModal form");
+
+  lostForm.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const fields = lostForm.querySelectorAll("input, textarea, select");
+
+    const newItem = {
+      id: Date.now().toString(),
+      title: fields[0].value,
+      category: fields[1].value,
+      description: fields[2].value,
+      location: fields[3].value,
+      date: fields[4].value,
+      status: "lost",
+      contactName: user.name,
+      contactInfo: user.email || "N/A"
+    };
+
+    items.push(newItem);
+    localStorage.setItem("items", JSON.stringify(items));
+
+    lostModal.style.display = "none";
+    lostForm.reset();
+
+    updateDashboard();
+    loadRecent();
+    loadBrowseItems("all");
+  });
+
+
+  /* =======================
+      FOUND FORM SUBMIT
+  ======================== */
+  const foundForm = document.querySelector("#foundModal form");
+
+  foundForm.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const fields = foundForm.querySelectorAll("input, textarea");
+
+    const newItem = {
+      id: Date.now().toString(),
+      title: fields[0].value,
+      description: fields[1].value,
+      location: fields[2].value,
+      date: fields[3].value,
+      contactName: fields[4].value,
+      contactInfo: fields[5].value,
+      status: "found",
+      category: "General"
+    };
+
+    items.push(newItem);
+    localStorage.setItem("items", JSON.stringify(items));
+
+    foundModal.style.display = "none";
+    foundForm.reset();
+
+    updateDashboard();
+    loadRecent();
+    loadBrowseItems("all");
+  });
+
+
+  /* =======================
+      DASHBOARD ↔ BROWSE TOGGLE
+  ======================== */
+  const browseSection = document.getElementById("browseSection");
+
+  document.getElementById("dashboard-link").onclick = () => {
+    browseSection.style.display = "none";
+    document.querySelector(".welcome-section").style.display = "block";
+    document.querySelector(".stats-grid").style.display = "grid";
+    document.querySelector(".actions-grid").style.display = "grid";
+  };
+
+  document.getElementById("browse-link").onclick = () => {
+    browseSection.style.display = "block";
+    document.querySelector(".welcome-section").style.display = "none";
+    document.querySelector(".stats-grid").style.display = "none";
+    document.querySelector(".actions-grid").style.display = "none";
     loadBrowseItems("all");
   };
 
-  document.getElementById("showLost").onclick = () => {
-    setActive("showLost");
-    loadBrowseItems("lost");
+  document.getElementById("browse-items-btn").onclick = () => {
+    browseSection.style.display = "block";
+    document.querySelector(".welcome-section").style.display = "none";
+    document.querySelector(".stats-grid").style.display = "none";
+    document.querySelector(".actions-grid").style.display = "none";
+    loadBrowseItems("all");
   };
 
-  document.getElementById("showFound").onclick = () => {
-    setActive("showFound");
-    loadBrowseItems("found");
-  };
 
-  function setActive(id) {
-    document.querySelectorAll(".browse-btn").forEach(b =>
-      b.classList.remove("active-browse")
-    );
-    document.getElementById(id).classList.add("active-browse");
-  }
+  /* =======================
+      FILTER BUTTONS
+  ======================== */
+  document.getElementById("showAll").onclick = () => loadBrowseItems("all");
+  document.getElementById("showLost").onclick = () => loadBrowseItems("lost");
+  document.getElementById("showFound").onclick = () => loadBrowseItems("found");
 
-  /* =====================================
-     LOGOUT
-  ====================================== */
+
+  /* =======================
+      LOGOUT
+  ======================== */
   document.getElementById("logout-btn").onclick = () => {
     localStorage.removeItem("user");
     window.location.href = "../login_page/index.html";
   };
 
-});
 
-
-/* =====================================
-   VIEW DETAILS FUNCTION
-===================================== */
-function viewDetails(itemId) {
-
-  const items = [
-    { id: "1", title: "Wallet", status: "lost", category: "Wallet", description: "Black leather wallet", location: "Cafeteria", date: "2025-11-03", contactName: "Rahul Sharma", contactInfo: "rahul@gmail.com" },
-    { id: "2", title: "Bag", status: "found", category: "Bag", description: "Blue backpack", location: "Library", date: "2025-11-02", contactName: "Sarah Singh", contactInfo: "sarah@gmail.com" },
-    { id: "3", title: "Headphones", status: "lost", category: "Electronics", description: "Sony wireless headset", location: "Auditorium", date: "2025-11-04", contactName: "Arjun Mehta", contactInfo: "arjun@gmail.com" },
-    { id: "4", title: "Car Keys", status: "found", category: "Keys", description: "Silver keychain (Honda logo)", location: "Parking Lot", date: "2025-11-01", contactName: "Neha Verma", contactInfo: "neha@gmail.com" }
-  ];
-
-  const selectedItem = items.find(i => i.id === itemId);
-
-  localStorage.setItem("selectedItem", JSON.stringify(selectedItem));
-
-  window.location.href = "../item_details/index.html";
-}
-
-
-/* =====================================
-   PROFILE BUTTON
-===================================== */
+  /* =======================
+      INITIAL LOAD
+  ======================== */
+  updateDashboard();
+  loadRecent();
+/* =======================
+     PROFILE BUTTON
+======================= */
 const profileBtn = document.getElementById("profile-link");
 if (profileBtn) {
-  profileBtn.onclick = () => {
+  profileBtn.addEventListener("click", () => {
     window.location.href = "../profile_page/index.html";
-  };
+  });
+}
+updateDashboard();
+loadRecent();
+
+}); // DOMContentLoaded END
+
+
+/* ============================
+   VIEW DETAILS FUNCTION
+============================ */
+function viewDetails(id) {
+  const items = JSON.parse(localStorage.getItem("items"));
+  const selected = items.find(i => i.id === id);
+  localStorage.setItem("selectedItem", JSON.stringify(selected));
+  window.location.href = "../item_details/index.html";
 }

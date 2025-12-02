@@ -17,36 +17,34 @@
       <button id="logout-btn" class="btn btn-outline">Logout</button>
     </header>
 
+    <!-- Navbar -->
     <nav class="navbar">
-  
       <div class="nav-left">
         <button id="dashboard-link" class="nav-tab">
           <i data-lucide="layout-dashboard"></i> Dashboard
         </button>
-    
         <button id="browse-link" class="nav-tab">
           <i data-lucide="search"></i> Browse
         </button>
       </div>
-    
+
       <button id="profile-link" class="profile-btn">
         <i data-lucide="user"></i> Profile
       </button>
-    
     </nav>
-    
+
     <!-- Welcome Section -->
     <section class="welcome-section">
       <h2 id="welcome-text"></h2>
       <p>Help your community by reporting lost or found items</p>
 
       <div class="button-group">
-        <button id="report-lost-btn" class="btn btn-white">
+        <button class="report-lost-btn btn btn-white">
           <i data-lucide="alert-circle"></i>
           Report Lost Item
         </button>
 
-        <button id="report-found-btn" class="btn btn-rf">
+        <button class="report-found-btn btn btn-rf">
           <i data-lucide="check-circle-2"></i>
           Report Found Item
         </button>
@@ -111,11 +109,11 @@
         </div>
 
         <div class="card-body">
-          <button id="report-lost-btn" class="btn_down btn-1">
+          <button class="report-lost-btn btn_down btn-1">
             <i data-lucide="alert-circle"></i> Report Lost Item
           </button>
 
-          <button id="report-found-btn" class="btn_down btn-2">
+          <button class="report-found-btn btn_down btn-2">
             <i data-lucide="check-circle-2"></i> Report Found Item
           </button>
 
@@ -139,24 +137,19 @@
       </div>
     </section>
 
-
-    <!-- ===========================
-         POPUP MODALS
-    ============================ -->
-
     <!-- LOST ITEM MODAL -->
     <div id="lostModal" class="modal">
       <div class="modal-content">
         <button class="close-modal" id="closeLostModal">×</button>
-    
+
         <h2>Report Lost Item</h2>
         <p>Please provide details about the item you lost.</p>
-    
+
         <form>
-    
+
           <label>Item Name *</label>
           <input type="text" required placeholder="e.g., Leather Wallet">
-    
+
           <label>Category *</label>
           <select required>
             <option value="">Select Category</option>
@@ -165,132 +158,79 @@
             <option>Electronics</option>
             <option>Keys</option>
           </select>
-    
+
           <label>Description *</label>
           <textarea required placeholder="Describe the lost item..."></textarea>
-    
+
           <label>Location Lost *</label>
           <input type="text" required placeholder="e.g., Library Entrance">
-    
+
           <label>Date Lost *</label>
           <input type="date" required>
-    
-          <!-- ⭐ UPDATED BUTTON (RIGHT-ALIGNED + GREEN) -->
+
           <div class="modal-buttons">
             <button type="submit" class="form-submit-btn">Submit</button>
           </div>
-    
+
         </form>
-    
+
       </div>
     </div>
-    
+
     <!-- FOUND ITEM MODAL -->
     <div id="foundModal" class="modal">
       <div class="modal-content">
         <button class="close-modal" id="closeFoundModal">×</button>
-    
+
         <h2>Report Found Item</h2>
         <p>Please provide details about the item you found.</p>
-    
+
         <form id="foundForm">
-          
+
           <label>Item Found *</label>
           <input type="text" required placeholder="e.g., Backpack">
-    
+
           <label>Description *</label>
           <textarea required placeholder="Describe the found item..."></textarea>
-    
+
           <label>Location Found *</label>
           <input type="text" required placeholder="e.g., Cafeteria">
-    
+
           <label>Date Found *</label>
           <input type="date" required>
-    
+
           <label>Contact Information *</label>
           <input type="text" required placeholder="Your Name">
           <input type="text" required placeholder="Email or Phone Number">
-    
-          <!-- Updated Button Row -->
+
           <div class="modal-buttons">
-            <button type="button" id="cancelFoundForm" class="form-cancel-btn">
-              Cancel
-            </button>
-    
-            <button type="submit" class="form-submit-btn">
-              Submit
-            </button>
+            <button type="button" id="cancelFoundForm" class="form-cancel-btn">Cancel</button>
+            <button type="submit" class="form-submit-btn">Submit</button>
           </div>
-    
+
         </form>
       </div>
     </div>
-    
 
-    <!-- Categories Section -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Popular Categories</h3>
-        <p class="card-description">Most commonly reported item types</p>
+    <!-- Browse Section -->
+    <section id="browseSection" style="display:none; margin-top:2rem;">
+      <h2 style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">Browse Items</h2>
+
+      <div class="browse-toggle">
+        <button id="showAll" class="browse-btn active-browse">All</button>
+        <button id="showLost" class="browse-btn">Lost</button>
+        <button id="showFound" class="browse-btn">Found</button>
       </div>
-    
-      <div class="card-body">
-        <div class="grid-4">
-          
-          <!-- Wallet -->
-          <div class="category-box">
-            <div class="category-count">0</div>
-            <div class="category-name">Wallet</div>
-          </div>
-    
-          <!-- Bag -->
-          <div class="category-box">
-            <div class="category-count">0</div>
-            <div class="category-name">Bag</div>
-          </div>
-    
-          <!-- Electronics -->
-          <div class="category-box">
-            <div class="category-count">0</div>
-            <div class="category-name">Electronics</div>
-          </div>
-    
-          <!-- Keys -->
-          <div class="category-box">
-            <div class="category-count">0</div>
-            <div class="category-name">Keys</div>
-          </div>
-    
-        </div>
-      </div>
-    </div>
-    <!-- ===========================
-      BROWSE SECTION (Hidden by default)
-=========================== -->
-<section id="browseSection" style="display:none; margin-top:2rem;">
 
-  <h2 style="font-size:1.5rem; font-weight:600; margin-bottom:1rem;">
-    Browse Items
-  </h2>
+      <div id="browseList" class="browse-grid"></div>
+    </section>
 
-  <!-- Toggle Buttons -->
-  <div class="browse-toggle">
-    <button id="showAll" class="browse-btn active-browse">All</button>
-    <button id="showLost" class="browse-btn">Lost</button>
-    <button id="showFound" class="browse-btn">Found</button>
   </div>
-
-  <!-- Browse List -->
-  <div id="browseList" class="browse-grid">
-    
-  </div>
-
-</section>
-
 
   <script src="script.js"></script>
 </body>
-</html> 
+</html>
+
 
 
 

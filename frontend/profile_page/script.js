@@ -1,5 +1,5 @@
 // ==========================
-// PROFILE PAGE SCRIPT
+// PROFILE PAGE SCRIPT (FINAL)
 // ==========================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,14 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // ⭐ ADMIN BUTTON LOGIC
   const regBtn = document.getElementById("registeredUsersBtn");
   if (regBtn) {
-    if (user.role === "admin") {
-      regBtn.classList.remove("hidden"); // show button
-    } else {
-      regBtn.classList.add("hidden"); // hide button
-    }
+    if (user.role === "admin") regBtn.classList.remove("hidden");
+    else regBtn.classList.add("hidden");
   }
 
-  // ⭐ Load all users (for Registered Users Modal)
+  // ⭐ Load all registered users
   const allUsers = JSON.parse(localStorage.getItem("allUsers") || "[]");
 
 
@@ -38,19 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (regBtn) {
     regBtn.addEventListener("click", () => {
-      totalUsersText.innerText = `Total of ${allUsers.length} registered user${
-        allUsers.length !== 1 ? "s" : ""
-      } in the system`;
+      totalUsersText.innerText = `Total of ${allUsers.length} registered user${allUsers.length !== 1 ? "s" : ""}`;
 
       usersList.innerHTML = allUsers
         .map((u, index) => {
-          const initials = u.name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .toUpperCase()
-            .slice(0, 2);
-
+          const initials = u.name.split(" ").map(n => n[0]).join("").toUpperCase();
           return `
             <div class="flex items-start gap-4 p-4 rounded-lg border bg-white hover:bg-gray-50 transition">
               <div class="h-12 w-12 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center text-lg font-semibold">
@@ -67,21 +56,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="space-y-1 text-sm">
                   <div class="flex items-center gap-2 text-gray-700">
-                    <i data-lucide="mail" class="w-3 h-3"></i>
-                    ${u.email}
+                    <i data-lucide="mail" class="w-3 h-3"></i>${u.email}
                   </div>
 
-                  ${
-                    u.phone
-                      ? `<div class="flex items-center gap-2 text-gray-700">
+                  ${u.phone ? `<div class="flex items-center gap-2 text-gray-700">
                       <i data-lucide="phone" class="w-3 h-3"></i>${u.phone}
-                    </div>`
-                      : ""
-                  }
+                    </div>` : ""}
                 </div>
               </div>
-            </div>
-          `;
+            </div>`;
         })
         .join("");
 
@@ -100,13 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // =====================================================
-  // PROFILE INFO
+  // PROFILE INFO DISPLAY
   // =====================================================
 
   document.getElementById("userName").innerText = user.name;
   document.getElementById("userBio").innerText = user.bio || "No bio provided.";
   document.getElementById("userEmail").innerText = user.email;
   document.getElementById("userPhone").innerText = user.phone || "Not provided";
+
   document.getElementById("avatar").innerText = user.name
     .split(" ")
     .map((n) => n[0])
@@ -114,16 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
     .toUpperCase();
 
 
-  // SAMPLE ITEMS
-  const items = [
-    { id: "i1", userId: "1", title: "Lost Wallet", description: "Black leather wallet near station", status: "lost", location: "City Station", date: "2025-09-12", claims: [] },
-    { id: "i2", userId: "1", title: "Found Phone", description: "iPhone found near park", status: "found", location: "Green Park", date: "2025-10-01", claims: [{}, {}] },
-    { id: "i3", userId: "1", title: "Claimed Keys", description: "Car keys with keychain", status: "claimed", location: "Mall", date: "2025-08-22", claims: [{}] },
-  ];
+  // =====================================================
+  // LOAD REAL ITEMS FROM DASHBOARD
+  // =====================================================
 
-  const myItems = items.filter((i) => i.userId === user.id);
-  const lostItems = myItems.filter((i) => i.status === "lost");
-  const foundItems = myItems.filter((i) => i.status === "found");
+  let allItems = JSON.parse(localStorage.getItem("items") || "[]");
+
+  // Filter user’s items by contactName
+  const myItems = allItems.filter(i => i.contactName === user.name);
+
+  const lostItems = myItems.filter(i => i.status === "lost");
+  const foundItems = myItems.filter(i => i.status === "found");
+  const claimedItems = myItems.filter(i => i.status === "claimed");
 
   document.getElementById("totalReports").innerText = myItems.length;
   document.getElementById("lostCount").innerText = lostItems.length;
@@ -131,15 +117,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ======================================
-  // TABS LOGIC
+  // TABS (All / Lost / Found / Claimed)
   // ======================================
 
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabContent = document.getElementById("tabContent");
 
-  const renderItems = (filter) => {
-    const filtered =
-      filter === "all" ? myItems : myItems.filter((i) => i.status === filter);
+  function renderItems(filter) {
+    let filtered = [];
+
+    if (filter === "all") filtered = myItems;
+    if (filter === "lost") filtered = lostItems;
+    if (filter === "found") filtered = foundItems;
+    if (filter === "claimed") filtered = claimedItems;
 
     if (filtered.length === 0) {
       tabContent.innerHTML = `
@@ -147,45 +137,45 @@ document.addEventListener("DOMContentLoaded", () => {
           <i data-lucide="package" class="w-12 h-12 mx-auto mb-3 text-gray-400"></i>
           <p>No items found</p>
         </div>`;
-    } else {
-      tabContent.innerHTML = filtered
-        .map(
-          (i) => `
+      lucide.createIcons();
+      return;
+    }
+
+    tabContent.innerHTML = filtered
+      .map(
+        (i) => `
         <div class="border rounded-lg p-4 mb-3 hover:bg-gray-50 transition">
           <div class="flex justify-between mb-2">
             <h4 class="font-semibold">${i.title}</h4>
             <span class="px-2 py-1 text-xs rounded-full ${
               i.status === "lost"
-                ? "bg-red-100 text-red-700"
+                ? "bg-red-100 text-red-600"
                 : i.status === "claimed"
                 ? "bg-green-100 text-green-700"
                 : "bg-blue-100 text-blue-700"
             }">${i.status}</span>
           </div>
+
           <p class="text-gray-600 mb-2">${i.description}</p>
+
           <div class="flex gap-4 text-sm text-gray-500">
             <span class="flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> ${i.location}
+              <i data-lucide="map-pin" class="w-3 h-3"></i>${i.location}
             </span>
+
             <span class="flex items-center gap-1">
-              <i data-lucide="calendar" class="w-3 h-3"></i> ${new Date(
-                i.date
-              ).toLocaleDateString()}
+              <i data-lucide="calendar" class="w-3 h-3"></i>${i.date}
             </span>
-            ${
-              i.claims.length
-                ? `<span class="ml-auto border px-2 rounded">${i.claims.length} claim${i.claims.length > 1 ? "s" : ""}</span>`
-                : ""
-            }
           </div>
-        </div>`
-        )
-        .join("");
-    }
+        </div>
+      `
+      )
+      .join("");
 
     lucide.createIcons();
-  };
+  }
 
+  // Default load = All
   renderItems("all");
 
   tabButtons.forEach((btn) => {
@@ -201,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ====================================
-  // EDIT PROFILE LOGIC
+  // EDIT PROFILE
   // ====================================
 
   const editBtn = document.getElementById("editBtn");
@@ -213,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
   editBtn.addEventListener("click", () => {
     profileView.classList.add("hidden");
     editForm.classList.remove("hidden");
+
     document.getElementById("editName").value = user.name;
     document.getElementById("editEmail").value = user.email;
     document.getElementById("editPhone").value = user.phone;
@@ -236,6 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("userEmail").innerText = user.email;
     document.getElementById("userPhone").innerText = user.phone;
     document.getElementById("userBio").innerText = user.bio;
+
     document.getElementById("avatar").innerText = user.name
       .split(" ")
       .map((n) => n[0])
@@ -260,4 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   lucide.createIcons();
-});
+
+}); // END
+
